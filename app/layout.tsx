@@ -3,10 +3,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://postgres-drizzle.vercel.app'),
-  title: 'Postgres Demo with Drizzle',
-  description:
-    'A simple Next.js app with a Postgres database and Drizzle as the ORM',
+  title: 'OSRS Prices',
+  description: 'Check GE prices using the Oldschool Runescape API',
 }
 
 const inter = Inter({

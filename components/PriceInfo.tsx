@@ -57,8 +57,8 @@ function TimedVolume({
           <TableRow>
             <TableHead>Icon</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Volume</TableHead>
             <TableHead>Price</TableHead>
+            <TableHead>Volume</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -71,9 +71,7 @@ function TimedVolume({
                 : 'low'
 
             const volume =
-              whichPrice === 'high'
-                ? item.value.highPriceVolume
-                : item.value.lowPriceVolume
+              item.value.highPriceVolume + item.value.lowPriceVolume
 
             const price =
               whichPrice === 'high'
@@ -103,12 +101,13 @@ function TimedVolume({
                 </TableCell>
 
                 <TableCell>
-                  {volume?.toLocaleString('en-US', {
+                  {price?.toLocaleString('en-US', {
                     maximumFractionDigits: 0,
                   })}
                 </TableCell>
+
                 <TableCell>
-                  {price?.toLocaleString('en-US', {
+                  {volume?.toLocaleString('en-US', {
                     maximumFractionDigits: 0,
                   })}
                 </TableCell>
