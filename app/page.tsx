@@ -44,7 +44,6 @@ export default function Home() {
 
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { authClient } from "@/lib/auth_client";
 import { SigninDiscord, Signout } from "@/components/signin-discord";
 
 async function Username() {

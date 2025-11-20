@@ -19,10 +19,17 @@ export type ItemPriceInfo = {
   lowPriceVolume: number;
 };
 
+export type LatestPriceInfo = {
+  high: number;
+  highTime: number;
+  low: number;
+  lowTime: number;
+};
+
 export type ItemId = number;
 
 export type LatestPrices = {
-  data: Record<ItemId, ItemPriceInfo>;
+  data: Record<ItemId, LatestPriceInfo>;
 };
 
 export const TimeScales = ["5m", "1h"] as const;
