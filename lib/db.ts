@@ -3,7 +3,7 @@ import postgres from "postgres";
 
 import * as auth_schema from "../auth-schema";
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+const sql = postgres(process.env.POSTGRES_URL!);
 
 // Connect to  Postgres
 export const db = drizzle(sql, {
