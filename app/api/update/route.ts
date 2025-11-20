@@ -1,20 +1,20 @@
-import { db } from "@/lib/db";
-import { latestGET, timedPricesGET } from "@/lib/osrs/osrs";
-import { recentPriceInfo } from "@/lib/schema";
-import { NextResponse } from "next/server";
+import { db } from '@/lib/db'
+import { latestGET, timedPricesGET } from '@/lib/osrs/osrs'
+import { recentPriceInfo } from '@/lib/schema'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   const prices = await Promise.all([
-    timedPricesGET("5m"),
-    timedPricesGET("1h"),
+    timedPricesGET('5m'),
+    timedPricesGET('1h'),
     latestGET(),
-  ]).then((arr) => ({ "5m": arr[0], "1h": arr[1], latest: arr[2] }));
+  ]).then(arr => ({ '5m': arr[0], '1h': arr[1], latest: arr[2] }))
 
   void (await db.insert(recentPriceInfo).values({
-    fiveMinutes: prices["5m"],
-    oneHour: prices["1h"],
-    latest: prices["latest"],
-  }));
+    fiveMinutes: prices['5m'],
+    oneHour: prices['1h'],
+    latest: prices['latest'],
+  }))
 
-  return new NextResponse();
+  return new NextResponse()
 }

@@ -1,7 +1,7 @@
-import { updatePriceData } from "@/lib/api/update";
-import { db } from "@/lib/db";
-import { ItemId, LatestPriceInfo } from "@/lib/osrs/types";
-import { sql } from "drizzle-orm";
+import { updatePriceData } from '@/lib/api/update'
+import { db } from '@/lib/db'
+import { ItemId, LatestPriceInfo } from '@/lib/osrs/types'
+import { sql } from 'drizzle-orm'
 
 const latest_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
@@ -12,7 +12,7 @@ const latest_with_ids = db.execute(sql<
     key as itemId,
     value
   FROM latest_with_ids
-  ORDER BY value->'low' DESC LIMIT 10;`);
+  ORDER BY value->'low' DESC LIMIT 10;`)
 
 const five_minutes_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
@@ -22,7 +22,7 @@ const five_minutes_with_ids = db.execute(sql<
     key as itemId,
     value
   FROM fivem_with_ids
-  ORDER BY value->'avgLowPrice' DESC LIMIT 10;`);
+  ORDER BY value->'avgLowPrice' DESC LIMIT 10;`)
 
 const hour_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
@@ -33,18 +33,18 @@ const hour_with_ids = db.execute(sql<
     key as itemId,
     value
   FROM fivem_with_ids
-  ORDER BY value->'avgLowPrice' DESC LIMIT 10;`);
+  ORDER BY value->'avgLowPrice' DESC LIMIT 10;`)
 
 export async function latestPriceData() {
-  await updatePriceData();
+  await updatePriceData()
 
   return await Promise.all([
     await latest_with_ids.execute(),
     await five_minutes_with_ids.execute(),
     await hour_with_ids.execute(),
-  ]).then((v) => ({
+  ]).then(v => ({
     latest: v[0],
-    "5m": v[1],
-    "1h": v[2],
-  }));
+    '5m': v[1],
+    '1h': v[2],
+  }))
 }

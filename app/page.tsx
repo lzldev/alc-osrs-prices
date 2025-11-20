@@ -1,18 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Suspense } from "react";
+import Image from 'next/image'
+import Link from 'next/link'
+import { Suspense } from 'react'
 
 export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <h1 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#4b4b4b] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
+      <h1 className="bg-gradient-to-br from-black via-[#171717] to-[#4b4b4b] bg-clip-text pb-8 pt-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
         OSRS Prices <span className="bg-transparent text-black">📈</span>
       </h1>
       <Suspense fallback={<h1>...loading....</h1>}>
         <Username />
       </Suspense>
 
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-between">
+      <div className="flex w-full justify-between px-20 py-10 sm:absolute sm:bottom-0">
         <Link href="https://vercel.com">
           <Image
             src="/vercel.svg"
@@ -37,17 +37,17 @@ export default function Home() {
         </Link>
       </div>
     </main>
-  );
+  )
 }
 
-import { SigninDiscord, Signout } from "@/components/signin-discord";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { SigninDiscord, Signout } from '@/components/signin-discord'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
 
 async function Username() {
   const session = await auth.api.getSession({
     headers: await headers(),
-  });
+  })
 
   if (!session) {
     return (
@@ -55,12 +55,12 @@ async function Username() {
         Not logged in!
         <SigninDiscord />
       </div>
-    );
+    )
   }
   return (
     <div className="flex flex-col items-center gap-2">
       Logged in as {session.user.name}
       <Signout />
     </div>
-  );
+  )
 }

@@ -1,39 +1,39 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth_client";
-import { ButtonHTMLAttributes } from "react";
+'use client'
+import { useRouter } from 'next/navigation'
+import { authClient } from '@/lib/auth_client'
+import { ButtonHTMLAttributes } from 'react'
 
-export function SignButton(props: ButtonHTMLAttributes<{}>) {
+export function SignButton(props: ButtonHTMLAttributes<any>) {
   return (
-    <button className="p-2 border-slate-500 rouded-md border-2 flex" {...props}>
+    <button className="rouded-md flex border-2 border-slate-500 p-2" {...props}>
       {props.children}
     </button>
-  );
+  )
 }
 
 export function SigninDiscord() {
   return (
     <SignButton
       onClick={() => {
-        authClient.signIn.social({ provider: "discord" });
+        authClient.signIn.social({ provider: 'discord' })
       }}
     >
       signin with discord
     </SignButton>
-  );
+  )
 }
 
 export function Signout() {
-  const { replace } = useRouter();
+  const { replace } = useRouter()
   return (
     <SignButton
       onClick={async () => {
-        await authClient.signOut();
+        await authClient.signOut()
 
-        replace("/");
+        replace('/')
       }}
     >
       Signout
     </SignButton>
-  );
+  )
 }
