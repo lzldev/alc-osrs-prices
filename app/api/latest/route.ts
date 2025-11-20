@@ -1,3 +1,4 @@
+import { mostRecentPriceData } from "@/lib/api/update";
 import { db } from "@/lib/db";
 import { ItemId, LatestPriceInfo } from "@/lib/osrs/types";
 import { sql } from "drizzle-orm";
@@ -36,15 +37,17 @@ const hour_with_ids = db.execute(sql<
   ORDER BY value->'avgLowPrice' DESC LIMIT 10;`);
 
 export async function GET() {
-  return NextResponse.json(
-    await Promise.all([
-      await latest_with_ids.execute(),
-      await five_minutes_with_ids.execute(),
-      await hour_with_ids.execute(),
-    ]).then((v) => ({
-      latest: v[0],
-      "5m": v[1],
-      "1h": v[2],
-    })),
-  );
+  await mostRecentPriceData();
+
+  const priceData = await Promise.all([
+    await latest_with_ids.execute(),
+    await five_minutes_with_ids.execute(),
+    await hour_with_ids.execute(),
+  ]).then((v) => ({
+    latest: v[0],
+    "5m": v[1],
+    "1h": v[2],
+  }));
+
+  return NextResponse.json(priceData);
 }

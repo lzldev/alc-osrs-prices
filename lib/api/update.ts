@@ -16,39 +16,35 @@ async function mostRecentDB() {
     .select()
     .from(mostRecentPriceInfoView)
     .execute()
-    .then((v) => v.at(0));
+    .then((v) => v.at(0)!);
 }
 
 export async function mostRecentPriceData() {
   const [api, mostRecent] = await Promise.all([apiPrices(), mostRecentDB()]);
 
-  const apiTime = fromUnixTime(api["5m"].timestamp);
+  const apiTime = fromUnixTime(
+    Math.max(api["5m"].timestamp, api["1h"].timestamp),
+  );
 
-  if (api["5m"].timestamp !== api["1h"].timestamp) {
-    console.warn(
-      `[update.ts] API Timestamps not matching | 5m:[${api["5m"].timestamp}] 1h:[${api["1h"].timestamp}]`,
-    );
-  }
+  console.info([
+    apiTime.getTime(),
+    mostRecent.created_at.getTime(),
+    apiTime.getTime() != mostRecent.created_at.getTime(),
+  ]);
 
-  if (mostRecent && apiTime.getTime() < mostRecent.created_at.getTime()) {
-    return mostRecent;
+  if (mostRecent && apiTime.getTime() === mostRecent.created_at.getTime()) {
+    console.info(`DB Price Data Already at newest`);
+    return;
   }
 
   console.info(`Updating DB Price Data`);
 
-  const insert = await db
-    .insert(recentPriceInfo)
-    .values({
-      fiveMinutes: api["5m"],
-      oneHour: api["1h"],
-      latest: api["latest"],
-      created_at: apiTime,
-    })
-    .returning();
+  void (await db.insert(recentPriceInfo).values({
+    fiveMinutes: api["5m"],
+    oneHour: api["1h"],
+    latest: api["latest"],
+    created_at: apiTime,
+  }));
 
-  if (!insert.at(0)) {
-    throw new Error("[update.ts] Insert didn't return data");
-  }
-
-  return insert.at(0)!;
+  return;
 }
