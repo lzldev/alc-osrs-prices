@@ -5,11 +5,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-import { format, fromUnixTime } from 'date-fns'
-import { enCA } from 'date-fns/locale'
 import { Timeseries } from '@/lib/osrs/types'
 import { clsx } from 'clsx'
-import { ComponentPropsWithoutRef, PropsWithoutRef } from 'react'
+import { format, fromUnixTime } from 'date-fns'
+import { ComponentPropsWithoutRef } from 'react'
 import { Line, LineChart, XAxis, YAxis } from 'recharts'
 
 const chartConfig = {
