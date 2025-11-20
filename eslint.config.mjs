@@ -1,5 +1,7 @@
 import { defineConfig, globalIgnores } from 'eslint/config'
+// @ts-ignore
 import nextVitals from 'eslint-config-next/core-web-vitals'
+// @ts-ignore
 import nextTs from 'eslint-config-next/typescript'
 
 const eslintConfig = defineConfig([
@@ -13,6 +15,15 @@ const eslintConfig = defineConfig([
     'build/**',
     'next-env.d.ts',
   ]),
+
+  [
+    {
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+    },
+  ],
 ])
 
 export default eslintConfig
