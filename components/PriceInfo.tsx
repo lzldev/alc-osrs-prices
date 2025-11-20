@@ -15,6 +15,7 @@ import {
   TableRow,
 } from './ui/table'
 import { fromUnixTime, formatDistanceToNow } from 'date-fns'
+import Link from 'next/link'
 
 export async function PriceInfo() {
   const mapping = await mappingGET()
@@ -82,10 +83,11 @@ function TimedVolume({
             return (
               <TableRow key={item.itemid}>
                 <TableCell>
-                  <div className="pl-0.5">
+                  <div className="flex max-h-[30px] min-h-[30px] w-[30px] items-center justify-center">
                     {m?.icon ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
+                        className="flex"
                         src={`https://oldschool.runescape.wiki/images/${m?.icon?.replaceAll(' ', '_')}`}
                         alt={`icon for ${m?.name}`}
                       />
@@ -94,7 +96,11 @@ function TimedVolume({
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{m?.name ?? `ID: ${item.itemid}`}</TableCell>
+                <TableCell>
+                  <Link href={`/item/${item.itemid}`}>
+                    {m?.name ?? `ID: ${item.itemid}`}
+                  </Link>
+                </TableCell>
 
                 <TableCell>
                   {volume?.toLocaleString('en-US', {
@@ -147,17 +153,24 @@ function Latest({
             return (
               <TableRow key={item.itemid}>
                 <TableCell>
-                  {m?.icon ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={`https://oldschool.runescape.wiki/images/${m?.icon?.replaceAll(' ', '_')}`}
-                      alt={`icon for ${m?.name}`}
-                    />
-                  ) : (
-                    <LucideBan />
-                  )}
+                  <div className="flex max-h-[30px] min-h-[30px] w-[30px] items-center justify-center">
+                    {m?.icon ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        className="flex"
+                        src={`https://oldschool.runescape.wiki/images/${m?.icon?.replaceAll(' ', '_')}`}
+                        alt={`icon for ${m?.name}`}
+                      />
+                    ) : (
+                      <LucideBan />
+                    )}
+                  </div>
                 </TableCell>
-                <TableCell>{m?.name ?? `ID: ${item.itemid}`}</TableCell>
+                <TableCell>
+                  <Link href={`/item/${item.itemid}`}>
+                    {m?.name ?? `ID: ${item.itemid}`}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   {price?.toLocaleString('en-US', {
                     maximumFractionDigits: 0,

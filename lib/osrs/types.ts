@@ -52,6 +52,6 @@ export const TimeSteps = ['5m', '1h', '6h', '24h'] as const
 export type TimeStep = (typeof TimeSteps)[number]
 
 export type Timeseries = {
-  data: []
+  data: TimeseriesPoint[]
   itemId: ItemId
 }

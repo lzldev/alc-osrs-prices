@@ -1,12 +1,12 @@
 import { apiFetch } from '../api'
 import type {
-  ItemId,
   ItemInfo,
   LatestPrices,
   Mapping,
   TimeScale,
   TimeStep,
   TimedPrices,
+  Timeseries,
 } from './types'
 import { cacheLife } from 'next/dist/server/use-cache/cache-life'
 
@@ -54,7 +54,7 @@ export async function timedPricesGET(scale: TimeScale) {
   return (await res.json()) as TimedPrices
 }
 
-export async function priceTimeSeriesGET(itemId: number, timeStep: TimeStep) {
+export async function priceTimeSeriesGET(itemId: string, timeStep: TimeStep) {
   'use cache'
   cacheLife('minutes')
 
@@ -65,5 +65,5 @@ export async function priceTimeSeriesGET(itemId: number, timeStep: TimeStep) {
 
   const res = await apiFetch(url)
 
-  return (await res.json()) as TimedPrices
+  return (await res.json()) as Timeseries
 }

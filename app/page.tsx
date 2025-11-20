@@ -14,9 +14,9 @@ export default function Home() {
         <Suspense
           fallback={
             <>
-              <Skeleton className="h-[520px] w-full" />
-              <Skeleton className="h-[520px] w-full" />
-              <Skeleton className="h-[520px] w-full" />
+              <Skeleton className="h-[550px] w-full" />
+              <Skeleton className="h-[550px] w-full" />
+              <Skeleton className="h-[550px] w-full" />
             </>
           }
         >

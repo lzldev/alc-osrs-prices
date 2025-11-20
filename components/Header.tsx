@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth'
+import Link from 'next/link'
 import { Separator } from '@radix-ui/react-separator'
 import { headers } from 'next/headers'
 import { Suspense } from 'react'
@@ -9,7 +10,7 @@ export function Header() {
   return (
     <div className="border-b-border flex w-full items-center justify-between border-b-2 px-4 py-1">
       <div className="flex gap-x-2 text-xl font-bold">
-        OSRS Prices
+        <Link href="/">OSRS Prices</Link>
         <span className="bg-transparent text-black">📈</span>
       </div>
       <Suspense>
