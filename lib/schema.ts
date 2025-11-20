@@ -7,7 +7,7 @@ import {
   timestamp,
   jsonb,
 } from "drizzle-orm/pg-core";
-import { account, session, user, verification } from "../auth-schema";
+import { user } from "../auth-schema";
 
 export const favorites = pgTable(
   "favorites",
@@ -19,9 +19,11 @@ export const favorites = pgTable(
   (table) => [index("user_idx").on(table.user_id)],
 );
 
-export const internal = pgTable("internal", {
+export const latest = pgTable("latest_prices", {
   id: serial("id").primaryKey(),
   latest: jsonb("latest").notNull(),
+  fiveMinutes: jsonb("five_minutes").notNull(),
+  oneHour: jsonb("one_hour").notNull(),
   created_at: timestamp("created_at").defaultNow(),
 });
 
