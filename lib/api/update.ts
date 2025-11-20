@@ -26,12 +26,6 @@ export async function updatePriceData() {
     Math.max(api['5m'].timestamp, api['1h'].timestamp)
   )
 
-  console.info([
-    apiTime.getTime(),
-    mostRecent.created_at.getTime(),
-    apiTime.getTime() != mostRecent.created_at.getTime(),
-  ])
-
   if (mostRecent && apiTime.getTime() === mostRecent.created_at.getTime()) {
     console.info(`DB Price Data Already at newest`)
     return
