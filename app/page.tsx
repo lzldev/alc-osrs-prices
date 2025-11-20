@@ -1,11 +1,10 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { Suspense } from 'react'
-import Table from '@/components/table'
-import TablePlaceholder from '@/components/table-placeholder'
-import ExpandingArrow from '@/components/expanding-arrow'
+import Image from "next/image";
+import Link from "next/link";
+import { Suspense } from "react";
+import TablePlaceholder from "@/components/table-placeholder";
+import ExpandingArrow from "@/components/expanding-arrow";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
@@ -20,18 +19,16 @@ export default function Home() {
       <h1 className="pt-4 pb-8 bg-gradient-to-br from-black via-[#171717] to-[#4b4b4b] bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
         Postgres on Vercel
       </h1>
-      <Suspense fallback={<TablePlaceholder />}>
-        <Table />
-      </Suspense>
+      <Suspense fallback={<TablePlaceholder />}></Suspense>
       <p className="font-light text-gray-600 w-full max-w-lg text-center mt-6">
-        Postgres demo with{' '}
+        Postgres demo with{" "}
         <Link
           href="https://github.com/drizzle-team/drizzle-orm"
           className="font-medium underline underline-offset-4 hover:text-black transition-colors"
         >
           Drizzle
-        </Link>{' '}
-        as the ORM. <br /> Built with{' '}
+        </Link>{" "}
+        as the ORM. <br /> Built with{" "}
         <Link
           href="https://nextjs.org/docs"
           className="font-medium underline underline-offset-4 hover:text-black transition-colors"
@@ -87,5 +84,5 @@ export default function Home() {
         </Link>
       </div>
     </main>
-  )
+  );
 }
