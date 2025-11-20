@@ -19,7 +19,7 @@ async function mostRecentDB() {
     .then((v) => v.at(0)!);
 }
 
-export async function mostRecentPriceData() {
+export async function updatePriceData() {
   const [api, mostRecent] = await Promise.all([apiPrices(), mostRecentDB()]);
 
   const apiTime = fromUnixTime(

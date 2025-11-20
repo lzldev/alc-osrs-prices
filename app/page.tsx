@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import TablePlaceholder from "@/components/table-placeholder";
-import ExpandingArrow from "@/components/expanding-arrow";
 
 export default function Home() {
   return (
@@ -42,9 +40,9 @@ export default function Home() {
   );
 }
 
+import { SigninDiscord, Signout } from "@/components/signin-discord";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { SigninDiscord, Signout } from "@/components/signin-discord";
 
 async function Username() {
   const session = await auth.api.getSession({
