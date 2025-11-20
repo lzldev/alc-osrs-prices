@@ -5,6 +5,9 @@ import { headers } from 'next/headers'
 import { Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Skeleton } from '@/components/ui/skeleton'
+import { PriceInfo } from '@/components/latest'
+import { Separator } from '@/components/ui/separator'
 
 export default function Home() {
   return (
@@ -15,12 +18,23 @@ export default function Home() {
           <span className="bg-transparent text-black">📈</span>
         </div>
         <Suspense>
-          <Username />
+          <UserArea />
         </Suspense>
       </div>
-      <h1 className="bg-gradient-to-br from-black via-[#171717] to-[#4b4b4b] bg-clip-text pb-8 pt-4 text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
-        OSRS Prices <span className="bg-transparent text-black">📈</span>
-      </h1>
+
+      <div className="grid w-full grid-flow-row gap-24 p-16 min-[873px]:grid-cols-2 min-[1323px]:grid-cols-3">
+        <Suspense
+          fallback={
+            <>
+              <Skeleton className="h-[40rem] w-full" />
+              <Skeleton className="h-[40rem] w-full" />
+              <Skeleton className="h-[40rem] w-full" />
+            </>
+          }
+        >
+          <PriceInfo />
+        </Suspense>
+      </div>
 
       <div className="flex w-full items-end justify-between px-20 py-10 sm:absolute sm:bottom-0">
         <div></div>
@@ -41,37 +55,7 @@ export default function Home() {
   )
 }
 
-async function UsernameTest() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
-
-  if (!session) {
-    return (
-      <div className="flex flex-col items-center gap-2">
-        Not logged in!
-        <SigninDiscord />
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      Logged in as {session.user.name}
-      <SigninDiscord className="h-12 w-72" />
-      <div className="border-border flex h-12 w-72 items-center justify-center gap-2 rounded-md border-2 p-1">
-        <Avatar user={session.user} />
-        <span className="line-clamp-1 min-w-[14rem] max-w-[14rem]">
-          {session.user.name}
-        </span>
-        U
-      </div>
-      <Avatar user={session.user} ignoreImage={true} />
-      <Signout />
-    </div>
-  )
-}
-async function Username() {
+async function UserArea() {
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -85,14 +69,19 @@ async function Username() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex h-12 w-72 items-center justify-center gap-2 rounded-md">
-        <Avatar user={session.user} />
-        <span className="line-clamp-1 min-w-[12rem] max-w-[12rem] select-none">
-          {session.user.name}
-        </span>
-        <Signout />
+    <>
+      <div className="flex h-full items-center">
+        <Separator className="mx-1 h-6" orientation="vertical" />
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex h-12 w-72 items-center justify-center gap-2 rounded-md">
+            <Avatar user={session.user} />
+            <span className="line-clamp-1 min-w-[12rem] max-w-[12rem] select-none">
+              {session.user.name}
+            </span>
+            <Signout />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

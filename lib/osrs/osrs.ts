@@ -19,6 +19,8 @@ const osrsMappingUrl = `${osrsBaseUrl}/mapping`
 
 const osrsTimeSeries = `${osrsBaseUrl}/timeseries`
 
+export type MappingData = Record<string, ItemInfo>
+
 export async function mappingGET() {
   'use cache'
   cacheLife('hours')
@@ -27,13 +29,10 @@ export async function mappingGET() {
 
   const apiMapping = (await res.json()) as Mapping
 
-  return apiMapping.reduce(
-    (pv, cv) => {
-      pv[cv.id] = cv
-      return pv
-    },
-    {} as Record<ItemId, ItemInfo>
-  )
+  return apiMapping.reduce((pv, cv) => {
+    pv[cv.id] = cv
+    return pv
+  }, {} as MappingData)
 }
 
 export async function latestGET() {
