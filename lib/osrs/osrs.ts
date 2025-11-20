@@ -1,5 +1,7 @@
 import { apiFetch } from '../api'
 import type {
+  ItemId,
+  ItemInfo,
   LatestPrices,
   Mapping,
   TimeScale,
@@ -23,7 +25,15 @@ export async function mappingGET() {
 
   const res = await apiFetch(osrsMappingUrl)
 
-  return (await res.json()) as Mapping
+  const apiMapping = (await res.json()) as Mapping
+
+  return apiMapping.reduce(
+    (pv, cv) => {
+      pv[cv.id] = cv
+      return pv
+    },
+    {} as Record<ItemId, ItemInfo>
+  )
 }
 
 export async function latestGET() {
