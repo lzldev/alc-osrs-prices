@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 const latest_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
 >`WITH latest_with_ids AS (
-    select (jsonb_each(latest->'data')).* from latest_prices
+    select (jsonb_each(latest->'data')).* from most_recent_price_info
   )
   SELECT
     key as itemId,
@@ -17,9 +17,8 @@ const latest_with_ids = db.execute(sql<
 const five_minutes_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
 >`WITH fivem_with_ids AS (
-    select (jsonb_each(five_minutes->'data')).* from latest_prices
-  )
-  SELECT
+    select (jsonb_each(five_minutes->'data')).* from most_recent_price_info
+  ) SELECT
     key as itemId,
     value
   FROM fivem_with_ids
@@ -28,7 +27,7 @@ const five_minutes_with_ids = db.execute(sql<
 const hour_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
 >`WITH fivem_with_ids AS (
-    select (jsonb_each(one_hour->'data')).* from latest_prices
+    select (jsonb_each(one_hour->'data')).* from most_recent_price_info
   )
   SELECT
     key as itemId,

@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    cacheComponents: true,
-  },
-  images: {
-    domains: [""],
-  },
+  cacheComponents: true,
 };
 
 module.exports = nextConfig;

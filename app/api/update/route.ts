@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { latestGET, timedPricesGET } from "@/lib/osrs/osrs";
-import { latest } from "@/lib/schema";
+import { recentPriceInfo } from "@/lib/schema";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,7 +10,7 @@ export async function GET() {
     latestGET(),
   ]).then((arr) => ({ "5m": arr[0], "1h": arr[1], latest: arr[2] }));
 
-  void (await db.insert(latest).values({
+  void (await db.insert(recentPriceInfo).values({
     fiveMinutes: prices["5m"],
     oneHour: prices["1h"],
     latest: prices["latest"],
