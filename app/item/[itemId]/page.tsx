@@ -10,6 +10,7 @@ import { TimeSteps, type TimeStep } from '@/lib/osrs/types'
 import { ButtonGroup } from '@/components/ui/button-group'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { clsx } from 'clsx'
 
 export default async function ItemDetails(props: PageProps<'/item/[itemId]'>) {
   return (
@@ -20,7 +21,7 @@ export default async function ItemDetails(props: PageProps<'/item/[itemId]'>) {
           <ItemInfo pageProps={props} />
         </Suspense>
         <Separator className="my-2" />
-        <Suspense fallback={<Skeleton className="h-96 w-full" />}>
+        <Suspense fallback={<Skeleton className="h-[26.25rem] w-full" />}>
           <ChartWrapper pageProps={props} />
         </Suspense>
       </div>
@@ -47,30 +48,31 @@ async function ChartWrapper({
 
   return (
     <>
-      <ButtonGroup>
-        {TimeSteps.map((step, idx) => {
-          return (
-            <Button
-              className=":hover &:active"
-              key={idx}
-              variant="outline"
-              asChild
-            >
-              <Link
+      <div className="flex justify-end">
+        <ButtonGroup>
+          {TimeSteps.map((step, idx) => {
+            return (
+              <Button
                 key={idx}
-                href={{
-                  query: {
-                    s: step,
-                  },
-                }}
+                variant={'outline'}
+                disabled={timeStep === step}
+                asChild={timeStep !== step}
               >
-                {step}
-              </Link>
-            </Button>
-          )
-        })}
-      </ButtonGroup>
-      <OsrsItemChart data={timeSeries} />
+                <Link
+                  href={{
+                    query: {
+                      s: step,
+                    },
+                  }}
+                >
+                  {step}
+                </Link>
+              </Button>
+            )
+          })}
+        </ButtonGroup>
+      </div>
+      <OsrsItemChart className="min-h-96 h-96" data={timeSeries} />
     </>
   )
 }

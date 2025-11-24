@@ -5,6 +5,7 @@ import { headers } from 'next/headers'
 import { Suspense } from 'react'
 import { Avatar } from './Avatar'
 import { SigninDiscord, Signout } from './signin-discord'
+import { Skeleton } from './ui/skeleton'
 
 export function Header() {
   return (
@@ -13,7 +14,7 @@ export function Header() {
         <Link href="/">OSRS Prices</Link>
         <span className="bg-transparent text-black">📈</span>
       </div>
-      <Suspense>
+      <Suspense fallback={<Skeleton className="h-12" />}>
         <UserArea />
       </Suspense>
     </div>

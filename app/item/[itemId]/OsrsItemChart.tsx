@@ -9,7 +9,7 @@ import { Timeseries } from '@/lib/osrs/types'
 import { clsx } from 'clsx'
 import { format, fromUnixTime } from 'date-fns'
 import { ComponentPropsWithoutRef } from 'react'
-import { Line, LineChart, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 const chartConfig = {
   avgHighPrice: {
@@ -31,8 +31,9 @@ export function OsrsItemChart({
   className,
 }: { data: Timeseries } & ComponentPropsWithoutRef<'div'>) {
   return (
-    <ChartContainer className={clsx('h-96', className)} config={chartConfig}>
+    <ChartContainer className={clsx(className)} config={chartConfig}>
       <LineChart accessibilityLayer data={data.data}>
+        <CartesianGrid />
         <XAxis
           dataKey="timestamp"
           tickLine={false}
