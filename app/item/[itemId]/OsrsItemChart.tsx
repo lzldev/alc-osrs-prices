@@ -6,6 +6,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { Timeseries } from '@/lib/osrs/types'
+import { formatPrice } from '@/lib/utils'
 import { clsx } from 'clsx'
 import { format, fromUnixTime } from 'date-fns'
 import { ComponentPropsWithoutRef } from 'react'
@@ -29,7 +30,11 @@ const chartConfig = {
 export function OsrsItemChart({
   data,
   className,
-}: { data: Timeseries } & ComponentPropsWithoutRef<'div'>) {
+  labelStep,
+}: {
+  data: Timeseries
+  labelStep?: 'hours' | 'days'
+} & ComponentPropsWithoutRef<'div'>) {
   return (
     <ChartContainer className={clsx(className)} config={chartConfig}>
       <LineChart accessibilityLayer data={data.data}>
@@ -38,10 +43,22 @@ export function OsrsItemChart({
           dataKey="timestamp"
           tickLine={false}
           tickMargin={10}
-          tickFormatter={tick => format(fromUnixTime(tick), 'HH:mm')}
+          tickFormatter={tick =>
+            format(
+              fromUnixTime(tick),
+              labelStep === 'hours' ? 'HH:mm' : 'dd/MM'
+            )
+          }
           scale="time"
         />
-        <YAxis type="number" />
+        <YAxis
+          type="number"
+          tickFormatter={v => formatPrice(v)}
+          domain={[
+            (dataMin: number) => Math.round(dataMin - dataMin * 0.01),
+            (dataMax: number) => Math.round(dataMax + dataMax * 0.01),
+          ]}
+        />
         <Line
           dataKey="avgLowPrice"
           stroke={'var(--color-avgLowPrice)'}

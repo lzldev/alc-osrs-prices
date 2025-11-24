@@ -16,6 +16,8 @@ import {
 } from './ui/table'
 import { fromUnixTime, formatDistanceToNow } from 'date-fns'
 import Link from 'next/link'
+import { OsrsIcon } from './OsrsIcon'
+import { formatPrice } from '@/lib/utils'
 
 export async function PriceInfo() {
   const mapping = await mappingGET()
@@ -81,18 +83,7 @@ function TimedVolume({
             return (
               <TableRow key={item.itemid}>
                 <TableCell>
-                  <div className="flex max-h-[30px] min-h-[30px] w-[30px] items-center justify-center">
-                    {m?.icon ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        className="flex"
-                        src={`https://oldschool.runescape.wiki/images/${m?.icon?.replaceAll(' ', '_')}`}
-                        alt={`icon for ${m?.name}`}
-                      />
-                    ) : (
-                      <LucideBan />
-                    )}
-                  </div>
+                  <OsrsIcon name={m.name} icon={m.icon} />
                 </TableCell>
                 <TableCell>
                   <Link href={`/item/${item.itemid}`}>
@@ -100,17 +91,8 @@ function TimedVolume({
                   </Link>
                 </TableCell>
 
-                <TableCell>
-                  {price?.toLocaleString('en-US', {
-                    maximumFractionDigits: 0,
-                  })}
-                </TableCell>
-
-                <TableCell>
-                  {volume?.toLocaleString('en-US', {
-                    maximumFractionDigits: 0,
-                  })}
-                </TableCell>
+                <TableCell>{formatPrice(price)}</TableCell>
+                <TableCell>{formatPrice(volume)}</TableCell>
               </TableRow>
             )
           })}
@@ -152,29 +134,14 @@ function Latest({
             return (
               <TableRow key={item.itemid}>
                 <TableCell>
-                  <div className="flex max-h-[30px] min-h-[30px] w-[30px] items-center justify-center">
-                    {m?.icon ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        className="flex"
-                        src={`https://oldschool.runescape.wiki/images/${m?.icon?.replaceAll(' ', '_')}`}
-                        alt={`icon for ${m?.name}`}
-                      />
-                    ) : (
-                      <LucideBan />
-                    )}
-                  </div>
+                  <OsrsIcon name={m.name} icon={m.icon} />
                 </TableCell>
                 <TableCell>
                   <Link href={`/item/${item.itemid}`}>
                     {m?.name ?? `ID: ${item.itemid}`}
                   </Link>
                 </TableCell>
-                <TableCell>
-                  {price?.toLocaleString('en-US', {
-                    maximumFractionDigits: 0,
-                  })}
-                </TableCell>
+                <TableCell>{formatPrice(price)}</TableCell>
                 <TableCell>
                   {formatDistanceToNow(
                     fromUnixTime(
