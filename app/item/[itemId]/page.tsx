@@ -1,6 +1,3 @@
-import { Container } from '@/components/Container'
-import { Footer } from '@/components/Footer'
-import { Header } from '@/components/Header'
 import { OsrsIcon } from '@/components/OsrsIcon'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
@@ -28,19 +25,15 @@ import { OsrsItemPriceChart } from './OsrsItemPriceChart'
 
 export default async function ItemDetails(props: PageProps<'/item/[itemId]'>) {
   return (
-    <Container>
-      <Header />
-      <div className="flex w-full flex-col p-16">
-        <Suspense fallback={<Skeleton className="h-6 w-full" />}>
-          <ItemInfo pageProps={props} />
-        </Suspense>
-        <Separator />
-        <Suspense fallback={<Skeleton className="h-[26.25rem] w-full" />}>
-          <ChartWrapper pageProps={props} />
-        </Suspense>
-      </div>
-      <Footer />
-    </Container>
+    <div className="flex w-full flex-col p-16">
+      <Suspense fallback={<Skeleton className="h-12 w-full" />}>
+        <ItemInfo pageProps={props} />
+      </Suspense>
+      <Separator />
+      <Suspense fallback={<Skeleton className="h-[27rem] w-full" />}>
+        <ChartWrapper pageProps={props} />
+      </Suspense>
+    </div>
   )
 }
 
