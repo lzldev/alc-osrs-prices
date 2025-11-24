@@ -1,10 +1,12 @@
 import { auth } from '@/lib/auth'
+import { mappingGET } from '@/lib/osrs/osrs'
 import { Separator } from '@radix-ui/react-separator'
 import { LucideHeart } from 'lucide-react'
 import { headers } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Avatar } from './Avatar'
+import { SearchInput } from './SearchInput'
 import { SigninDiscord, Signout } from './signin-discord'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
@@ -12,14 +14,29 @@ import { Skeleton } from './ui/skeleton'
 export function Header() {
   return (
     <div className="flex w-full items-center justify-between border-b-2 border-b-border px-2 py-1">
-      <div className="flex gap-x-2 text-xl font-bold">
-        <Link href="/">OSRS Prices</Link>
-        <span className="bg-transparent text-black">📈</span>
+      <div className="flex">
+        <div className="flex gap-x-2 text-xl font-bold">
+          <Link href="/">OSRS Prices</Link>
+          <span className="bg-transparent text-black">📈</span>
+          <Suspense>
+            <SearchInputWrapper />
+          </Suspense>
+        </div>
       </div>
       <Suspense fallback={<Skeleton className="h-12" />}>
         <UserArea />
       </Suspense>
     </div>
+  )
+}
+
+async function SearchInputWrapper() {
+  const mapping = await mappingGET()
+
+  return (
+    <>
+      <SearchInput mapping={mapping} />
+    </>
   )
 }
 

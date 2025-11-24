@@ -33,8 +33,8 @@ export default function RootLayout({
             <Container>
               <Header />
               <Suspense>{children}</Suspense>
+              <Footer />
             </Container>
-            <Footer />
           </TooltipProvider>
         </ThemeProvider>
       </body>
