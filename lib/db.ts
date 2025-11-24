@@ -2,6 +2,7 @@ import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres, { type Sql } from 'postgres'
 
 import * as auth_schema from '../auth-schema'
+import * as schema from './schema'
 
 let connection: Sql<any>
 
@@ -19,5 +20,5 @@ if (process.env.NODE_ENV === 'production') {
 
 // Connect to  Postgres
 export const db = drizzle(connection, {
-  schema: { ...auth_schema },
+  schema: { ...auth_schema, ...schema },
 })

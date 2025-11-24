@@ -6,6 +6,7 @@ import { Container } from '@/components/Container'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Suspense } from 'react'
+import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
   title: 'OSRS Prices',
@@ -24,15 +25,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable}`}>
-        <TooltipProvider>
-          <Container>
-            <Header />
-            <Suspense>{children}</Suspense>
-          </Container>
-          <Footer />
-        </TooltipProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TooltipProvider>
+            <Container>
+              <Header />
+              <Suspense>{children}</Suspense>
+            </Container>
+            <Footer />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -1,17 +1,17 @@
 import { auth } from '@/lib/auth'
-import Link from 'next/link'
 import { Separator } from '@radix-ui/react-separator'
+import { LucideHeart } from 'lucide-react'
 import { headers } from 'next/headers'
+import Link from 'next/link'
 import { Suspense } from 'react'
 import { Avatar } from './Avatar'
 import { SigninDiscord, Signout } from './signin-discord'
-import { Skeleton } from './ui/skeleton'
 import { Button } from './ui/button'
-import { LucideHeart } from 'lucide-react'
+import { Skeleton } from './ui/skeleton'
 
 export function Header() {
   return (
-    <div className="flex w-full items-center justify-between border-b-2 border-b-border px-4 py-1">
+    <div className="flex w-full items-center justify-between border-b-2 border-b-border px-2 py-1">
       <div className="flex gap-x-2 text-xl font-bold">
         <Link href="/">OSRS Prices</Link>
         <span className="bg-transparent text-black">📈</span>
@@ -30,7 +30,8 @@ async function UserArea() {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex items-center gap-1">
+        <Separator className="h-8 w-[1px] bg-border" orientation="vertical" />
         <SigninDiscord className="h-12 w-72" />
       </div>
     )

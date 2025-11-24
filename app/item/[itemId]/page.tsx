@@ -8,20 +8,29 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { auth } from '@/lib/auth'
+import { db } from '@/lib/db'
 import { mappingGET, priceTimeSeriesGET } from '@/lib/osrs/osrs'
 import { TimeSteps, type TimeStep } from '@/lib/osrs/types'
+import { favorites } from '@/lib/schema'
 import { formatPrice } from '@/lib/utils'
 import clsx from 'clsx'
 import { format, fromUnixTime } from 'date-fns'
+import { and, eq } from 'drizzle-orm'
 import {
+  Heart,
   LucideArrowDown,
   LucideArrowUp,
   LucideMinus,
   LucideProps,
 } from 'lucide-react'
+import { headers } from 'next/headers'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 import { OsrsItemPriceChart } from './OsrsItemPriceChart'
+import { serverFavorite } from './actions'
+import { refresh } from 'next/cache'
 
 export default async function ItemDetails(props: PageProps<'/item/[itemId]'>) {
   return (
@@ -112,6 +121,10 @@ async function ItemInfo({
 
   const mapping = (await mappingGET())[itemId]
 
+  if (!mapping) {
+    return notFound()
+  }
+
   const timeStep: TimeStep = TimeSteps.includes(query['s'] as TimeStep)
     ? (query['s'] as TimeStep)
     : '5m'
@@ -125,15 +138,15 @@ async function ItemInfo({
 
   return (
     <div className="flex items-center py-2">
-      <OsrsIcon
-        className="max-h-[30px] min-h-[30px] w-[30px] overflow-clip"
-        imgProps={{
-          className: 'flex object-cover',
-        }}
-        name={mapping.name}
-        icon={mapping.icon}
-      />
       <div className="flex items-center pl-1 text-2xl font-bold">
+        <OsrsIcon
+          className="max-h-[30px] min-h-[30px] w-[30px] overflow-clip"
+          imgProps={{
+            className: 'flex object-cover',
+          }}
+          name={mapping.name}
+          icon={mapping.icon}
+        />
         <Tooltip>
           <TooltipTrigger asChild>
             <span>{mapping?.name}</span>
@@ -176,7 +189,48 @@ async function ItemInfo({
           </div>
         </div>
       </div>
+      <div className="flex flex-1 items-center justify-end">
+        <Suspense
+          fallback={
+            <Button size="icon" variant="outline" disabled>
+              <Heart />
+            </Button>
+          }
+        >
+          <FavoriteButton itemId={itemId} />
+        </Suspense>
+      </div>
     </div>
+  )
+}
+
+async function FavoriteButton({ itemId }: { itemId: string }) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
+  const isFavorite =
+    session &&
+    (
+      await db
+        .select()
+        .from(favorites)
+        .where(t =>
+          and(eq(t.user_id, session.user.id), eq(t.item_id, parseInt(itemId)))
+        )
+    ).at(0)
+
+  const favoriteItem = serverFavorite.bind(null, itemId)
+
+  return (
+    <Button
+      variant={isFavorite ? 'default' : 'outline'}
+      size="icon"
+      onClick={favoriteItem}
+      disabled={!session}
+    >
+      <Heart />
+    </Button>
   )
 }
 
