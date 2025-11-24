@@ -60,6 +60,9 @@
 }
 
 @layer base {
+  :root {
+    @apply selection:bg-primary selection:text-primary-foreground;
+  }
   * {
     @apply border-border;
   }

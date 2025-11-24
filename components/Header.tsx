@@ -38,14 +38,14 @@ async function UserArea() {
 
   return (
     <>
-      <div className="flex h-full items-center">
+      <div className="flex h-full items-center gap-1">
         <Button variant="link" asChild>
           <Link href="/user/favorite">
             <LucideHeart />
             Favorites
           </Link>
         </Button>
-        <Separator className="mx-1 h-6" orientation="vertical" />
+        <Separator className="h-8 w-[1px] bg-border" orientation="vertical" />
         <div className="flex flex-col items-center gap-2">
           <div className="flex h-12 w-72 items-center justify-center gap-2 rounded-md">
             <Avatar user={session.user} />

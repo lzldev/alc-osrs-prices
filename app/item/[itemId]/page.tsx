@@ -16,7 +16,12 @@ import { TimeSteps, type TimeStep } from '@/lib/osrs/types'
 import { formatPrice } from '@/lib/utils'
 import clsx from 'clsx'
 import { format, fromUnixTime } from 'date-fns'
-import { DynamicIcon } from 'lucide-react/dynamic'
+import {
+  LucideArrowDown,
+  LucideArrowUp,
+  LucideMinus,
+  LucideProps,
+} from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { OsrsItemPriceChart } from './OsrsItemPriceChart'
@@ -122,13 +127,6 @@ async function ItemInfo({
   const lastSold = timeSeries.data.findLast(v => !!v.avgLowPrice)
   const firstSold = timeSeries.data.find(v => !!v.avgLowPrice)
 
-  console.log('first', firstSold?.avgLowPrice)
-  console.log('last', lastSold?.avgLowPrice)
-  console.log(
-    'diff',
-    ((firstSold?.avgLowPrice ?? 0) - (lastSold?.avgLowPrice ?? 0)) * -1
-  )
-
   const diff =
     -((firstSold?.avgLowPrice ?? 1) / (lastSold?.avgLowPrice ?? 1) - 1) * 100
 
@@ -152,35 +150,56 @@ async function ItemInfo({
           </TooltipContent>
         </Tooltip>
         <Separator orientation="vertical" className="mx-4 h-8 self-center" />
-        <span className="font-normal">
-          {formatPrice(lastSold!.avgLowPrice)}
-          {' gp'}
-        </span>
-        <DynamicIcon
-          className={clsx(
-            diff === 0 && 'pt-1',
-            diff === 0
-              ? 'stroke-muted-foreground'
-              : diff < 0
-                ? 'stroke-red-500'
-                : 'stroke-green-500',
-            '-mr-1 ml-2 font-normal'
-          )}
-          name={diff === 0 ? 'minus' : diff < 0 ? 'arrow-down' : 'arrow-up'}
-        />
-        <span
-          className={clsx(
-            diff === 0
-              ? 'text-muted-foreground'
-              : diff < 0
-                ? 'text-red-500'
-                : 'text-green-500',
-            'ml-2 font-normal'
-          )}
-        >
-          {diff.toFixed(2)} %
-        </span>
+        <div className="flex items-center justify-center">
+          <span className="min-w-[200px] font-normal">
+            {formatPrice(lastSold!.avgLowPrice)}
+            {' gp'}
+          </span>
+          <div className="flex h-full items-center">
+            <DiffIcon diff={diff} />
+            {/*<DynamicIcon
+              className={clsx(
+                diff === 0
+                  ? 'stroke-muted-foreground pt-1'
+                  : diff < 0
+                    ? 'stroke-red-500'
+                    : 'stroke-green-500',
+                '-mr-1 ml-2 font-normal'
+              )}
+              name={diff === 0 ? 'minus' : diff < 0 ? 'arrow-down' : 'arrow-up'}
+            />*/}
+            <span
+              className={clsx(
+                diff === 0
+                  ? 'text-muted-foreground'
+                  : diff < 0
+                    ? 'text-red-500'
+                    : 'text-green-500',
+                'ml-2 font-normal'
+              )}
+            >
+              {diff.toFixed(2)} %
+            </span>
+          </div>
+        </div>
       </div>
     </div>
+  )
+}
+
+function DiffIcon({
+  diff,
+  className,
+  ...props
+}: { diff: number } & LucideProps) {
+  return diff === 0 ? (
+    <LucideMinus
+      className={clsx('pt-1 text-muted-foreground', className)}
+      {...props}
+    />
+  ) : diff < 0 ? (
+    <LucideArrowDown className={clsx('text-red-500', className)} {...props} />
+  ) : (
+    <LucideArrowUp className={clsx('text-green-500', className)} {...props} />
   )
 }
