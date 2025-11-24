@@ -58,6 +58,8 @@ export async function priceTimeSeriesGET(itemId: string, timeStep: TimeStep) {
   'use cache'
   cacheLife('minutes')
 
+  console.log('[priceTimeSeriesGET] - ', 'being used')
+
   const url = new URL(osrsTimeSeries)
 
   url.searchParams.set('id', itemId.toString())

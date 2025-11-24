@@ -23,7 +23,6 @@ const five_minutes_with_ids = db.execute(sql<
     value
   FROM fivem_with_ids
   ORDER BY (value -> 'lowPriceVolume')::integer + (value -> 'highPriceVolume')::integer DESC LIMIT 10;`)
-//ORDER BY GREATEST(value -> 'lowPriceVolume' ,value -> 'highPriceVolume') DESC LIMIT 10;`)
 
 const hour_with_ids = db.execute(sql<
   Record<ItemId, ItemPriceInfo>
@@ -35,8 +34,6 @@ const hour_with_ids = db.execute(sql<
     value
   FROM fivem_with_ids
   ORDER BY (value -> 'lowPriceVolume')::integer + (value -> 'highPriceVolume')::integer DESC LIMIT 10;`)
-
-//ORDER BY GREATEST(value -> 'lowPriceVolume' ,value -> 'highPriceVolume') DESC LIMIT 10;`)
 
 export type LatestPriceData = { itemid: string; value: LatestPriceInfo }[]
 export type TimedVolumeData = { itemid: string; value: ItemPriceInfo }[]

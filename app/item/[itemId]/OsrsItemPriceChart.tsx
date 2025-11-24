@@ -27,7 +27,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function OsrsItemChart({
+export function OsrsItemPriceChart({
   data,
   className,
   labelStep,
@@ -60,12 +60,14 @@ export function OsrsItemChart({
           ]}
         />
         <Line
+          name="Low Price"
           dataKey="avgLowPrice"
           stroke={'var(--color-avgLowPrice)'}
           connectNulls={true}
           dot={false}
         />
         <Line
+          name="High Price"
           dataKey="avgHighPrice"
           connectNulls={true}
           stroke={'var(--color-avgHighPrice)'}

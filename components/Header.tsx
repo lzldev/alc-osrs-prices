@@ -6,6 +6,8 @@ import { Suspense } from 'react'
 import { Avatar } from './Avatar'
 import { SigninDiscord, Signout } from './signin-discord'
 import { Skeleton } from './ui/skeleton'
+import { Button } from './ui/button'
+import { LucideHeart } from 'lucide-react'
 
 export function Header() {
   return (
@@ -37,6 +39,12 @@ async function UserArea() {
   return (
     <>
       <div className="flex h-full items-center">
+        <Button variant="link" asChild>
+          <Link href="/user/favorite">
+            <LucideHeart />
+            Favorites
+          </Link>
+        </Button>
         <Separator className="mx-1 h-6" orientation="vertical" />
         <div className="flex flex-col items-center gap-2">
           <div className="flex h-12 w-72 items-center justify-center gap-2 rounded-md">
