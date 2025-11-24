@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const inter = Inter({
   variable: '--font-inter',
-  subsets: ['latin'],
+  subsets: ['latin-ext'],
   display: 'swap',
 })
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={inter.className} suppressHydrationWarning>
       <head />
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

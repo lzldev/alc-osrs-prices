@@ -31,13 +31,15 @@ export function OsrsItemPriceChart({
   data,
   className,
   labelStep,
+  animate,
 }: {
   data: Timeseries
   labelStep?: 'hours' | 'days'
+  animate?: boolean
 } & ComponentPropsWithoutRef<'div'>) {
   return (
     <ChartContainer className={clsx(className)} config={chartConfig}>
-      <LineChart accessibilityLayer data={data.data}>
+      <LineChart accessibilityLayer data={data.data} syncId={'osrs_item_chart'}>
         <CartesianGrid />
         <XAxis
           dataKey="timestamp"
@@ -60,6 +62,7 @@ export function OsrsItemPriceChart({
           ]}
         />
         <Line
+          isAnimationActive={animate}
           name="Low Price"
           dataKey="avgLowPrice"
           stroke={'var(--color-avgLowPrice)'}
@@ -67,6 +70,7 @@ export function OsrsItemPriceChart({
           dot={false}
         />
         <Line
+          isAnimationActive={animate}
           name="High Price"
           dataKey="avgHighPrice"
           connectNulls={true}

@@ -6,7 +6,7 @@ import { SiGithub } from 'react-icons/si'
 
 export function Footer() {
   return (
-    <div className="flex w-full justify-end gap-x-2 px-4 py-4 sm:absolute sm:bottom-0">
+    <div className="flex w-full justify-end gap-x-2 px-4 py-4">
       <ThemeSwitcher />
       <Button variant="ghost" size="icon" asChild>
         <Link

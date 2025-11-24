@@ -26,6 +26,13 @@ export type LatestPriceInfo = {
   lowTime: number
 }
 
+export const TimingStepMessages: Record<TimeStep, string> = {
+  '5m': 'Last 24 Hours in 5 minutes intervals',
+  '1h': 'Last 7 days in 1 Hour Intervals',
+  '6h': 'Last 30 days in 6 Hour intervals',
+  '24h': 'Last year in 24 hour intervals',
+}
+
 export type ItemId = number
 
 export type LatestPrices = {
