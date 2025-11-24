@@ -134,7 +134,7 @@ async function PriceWrapper({
         </TooltipTrigger>
         <TooltipContent className="bg-foreground text-background">
           <p>
-            <span className="text-muted-foreground">went from </span>
+            <span className="text-muted-foreground">from </span>
             {formatPrice(firstSold.avgLowPrice)} gp
           </p>
           <p>
@@ -143,11 +143,11 @@ async function PriceWrapper({
           </p>
           <p>
             <span className="text-muted-foreground">diff</span>{' '}
-            {formatPrice(firstSold.avgLowPrice - lastSold.avgLowPrice)} gp
+            {formatPrice(-(firstSold.avgLowPrice - lastSold.avgLowPrice))} gp
           </p>
         </TooltipContent>
       </Tooltip>
-      <span className="text-md mr-2 w-32 text-end">{price}</span>
+      <span className="text-md mr-2 w-36 text-end">{price}</span>
     </>
   )
 }

@@ -15,9 +15,15 @@ export function Header() {
   return (
     <div className="flex w-full items-center justify-between border-b-2 border-b-border px-2 py-1">
       <div className="flex">
-        <div className="flex gap-x-2 text-xl font-bold">
-          <Link href="/">OSRS Prices</Link>
-          <span className="bg-transparent text-black">📈</span>
+        <div className="flex text-xl font-bold">
+          <Link className="mt-1.5 flex items-baseline gap-x-2 px-2" href="/">
+            OSRS Prices
+            <span className="bg-transparent text-black">📈</span>
+          </Link>
+          <Separator
+            orientation="vertical"
+            className="mr-2 h-8 w-[1px] bg-border"
+          />
           <Suspense>
             <SearchInputWrapper />
           </Suspense>

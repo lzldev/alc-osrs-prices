@@ -1,12 +1,11 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { SiGithub } from 'react-icons/si'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { Button } from './ui/button'
-import { SiGithub } from 'react-icons/si'
 
 export function Footer() {
   return (
-    <div className="mt-auto flex w-full justify-end gap-x-2 px-4 py-4">
+    <div className="fixed bottom-0 right-0 flex justify-end gap-x-2 px-4 py-4">
       <ThemeSwitcher />
       <Button variant="ghost" size="icon" asChild>
         <Link
