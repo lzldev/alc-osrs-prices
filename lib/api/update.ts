@@ -39,6 +39,4 @@ export async function updatePriceData() {
     latest: api['latest'],
     created_at: apiTime,
   }))
-
-  return
 }

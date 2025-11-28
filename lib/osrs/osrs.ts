@@ -14,9 +14,7 @@ const osrsBaseUrl = 'https://prices.runescape.wiki/api/v1/osrs'
 const osrsLatestUrl = `${osrsBaseUrl}/latest`
 const osrs5MinutesUrl = `${osrsBaseUrl}/5m`
 const osrs1HourUrl = `${osrsBaseUrl}/1h`
-
 const osrsMappingUrl = `${osrsBaseUrl}/mapping`
-
 const osrsTimeSeries = `${osrsBaseUrl}/timeseries`
 
 export type MappingData = Record<string, ItemInfo>

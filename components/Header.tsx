@@ -63,7 +63,7 @@ async function UserArea() {
   return (
     <>
       <div className="flex h-full items-center gap-1">
-        <Button variant="link" asChild>
+        <Button className="fill-rose-600 text-rose-600" variant="link" asChild>
           <Link href="/user/favorites">
             <LucideHeart />
             Favorites
