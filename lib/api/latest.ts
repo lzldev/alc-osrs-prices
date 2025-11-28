@@ -2,6 +2,7 @@ import { updatePriceData } from '@/lib/api/update'
 import { db } from '@/lib/db'
 import { ItemId, ItemPriceInfo, LatestPriceInfo } from '@/lib/osrs/types'
 import { sql } from 'drizzle-orm'
+import { cacheLife } from 'next/cache'
 
 const latest_with_ids = db.execute(sql<
   Record<ItemId, LatestPriceInfo>
@@ -39,6 +40,13 @@ export type LatestPriceData = { itemid: string; value: LatestPriceInfo }[]
 export type TimedVolumeData = { itemid: string; value: ItemPriceInfo }[]
 
 export async function latestPriceData() {
+  'use cache'
+  cacheLife({
+    expire: 60 * 60, // 1 hour
+    stale: 60,
+    revalidate: 60,
+  })
+
   await updatePriceData()
 
   return await Promise.all([

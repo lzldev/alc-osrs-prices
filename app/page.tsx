@@ -19,6 +19,7 @@ import { Separator } from '@radix-ui/react-separator'
 import { formatDistanceToNow, fromUnixTime } from 'date-fns'
 import Link from 'next/link'
 import { Suspense } from 'react'
+import { TimeSince } from '../components/TimeSince'
 
 export default function Home() {
   return (
@@ -162,15 +163,9 @@ function Latest({
                 </TableCell>
                 <TableCell>{formatPrice(price)}</TableCell>
                 <TableCell>
-                  {formatDistanceToNow(
-                    fromUnixTime(
-                      Math.max(item.value.highTime, item.value.lowTime)
-                    ),
-                    {
-                      includeSeconds: true,
-                      addSuffix: true,
-                    }
-                  )}
+                  <TimeSince
+                    since={Math.max(item.value.highTime, item.value.lowTime)}
+                  />
                 </TableCell>
               </TableRow>
             )
